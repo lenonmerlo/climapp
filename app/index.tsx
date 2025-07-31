@@ -30,6 +30,7 @@ const style = StyleSheet.create({
   title: {
     color: "#fff",
     fontSize: 25,
+    fontFamily: "Montserrat_400Regular",
   },
 
   button: {
@@ -47,5 +48,6 @@ const style = StyleSheet.create({
     color: "#01080e",
     fontSize: 20,
     fontWeight: "600",
+    fontFamily: "Montserrat_600SemiBold",
   }
 });
