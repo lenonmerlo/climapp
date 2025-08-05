@@ -5,13 +5,16 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import citiesData from "../data/cities.json";
 import { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
 
 const Cities = () => {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [filteredCities, setFilteredCities] = useState(citiesData);
 
@@ -43,7 +46,13 @@ const Cities = () => {
       <ScrollView>
         <View style={style.scrollList}>
           {filteredCities.map((city, index) => (
-            <View style={style.listItem} key={index}>
+            <TouchableOpacity
+              onPress={() => {
+                router.push(`/${city.city}`);
+              }}
+              style={style.listItem}
+              key={index}
+            >
               <Image
                 style={style.cityImage}
                 source={require("../assets/images/Ícones/Vector.png")}
@@ -52,7 +61,7 @@ const Cities = () => {
                 {city.city.replace(",", " - ")}
               </Text>
               <Text style={style.cityTemp}>{city.temp}º</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
