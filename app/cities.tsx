@@ -14,9 +14,16 @@ import { useEffect, useState } from "react";
 const Cities = () => {
   const [search, setSearch] = useState("");
   const [filteredCities, setFilteredCities] = useState(citiesData);
+
   useEffect(() => {
+    const normalize = (text: string) =>
+      text
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+
     const newFilteredCities = citiesData.filter((city) =>
-      city.city.includes(search)
+      normalize(city.city).includes(normalize(search))
     );
 
     setFilteredCities(newFilteredCities);
@@ -27,6 +34,7 @@ const Cities = () => {
         <TextInput
           placeholder="Digite a cidade"
           placeholderTextColor={"#FFF"}
+          style={style.input}
           value={search}
           onChangeText={(value) => setSearch(value)}
         />
@@ -34,7 +42,7 @@ const Cities = () => {
       </View>
       <ScrollView>
         <View style={style.scrollList}>
-          {citiesData.map((city, index) => (
+          {filteredCities.map((city, index) => (
             <View style={style.listItem} key={index}>
               <Image
                 style={style.cityImage}
@@ -93,7 +101,7 @@ const style = StyleSheet.create({
   },
 
   inputContainer: {
-    height: 36,
+    height: 46,
     width: "100%",
     backgroundColor: "rgba(255,255,255, 0.15)",
     borderRadius: 24,
